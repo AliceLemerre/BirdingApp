@@ -1,10 +1,10 @@
 import { Text, View } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context'
+    import { SafeAreaView } from 'react-native-safe-area-context'
 
 
-export default function Index() {
+export default function UserBirds() {
   return (
-    <SafeAreaView>
+      <SafeAreaView>
       <View
         style={{
           flex: 1,
@@ -13,7 +13,7 @@ export default function Index() {
           alignItems: "center",
         }}
       >
-        <Text>A</Text>
+        <Text>B</Text>
       </View>
     </SafeAreaView>
   );
