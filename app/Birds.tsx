@@ -1,19 +1,80 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import React from "react";
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ApiProvider, useApi, TObservation } from "../providers/apiProvider";
+import { useBirdsContext } from "@/providers/BirdProvider";
 
-const MY_TOKEN = 'xxx';
 
-export default function BirdsList() {
-  const [data, setData] = useState(null);
+function ObservationCard({ obs }: { obs: TObservation }) {
+  const { addBird, hasBird } = useBirdsContext();
+  const already = hasBird(obs.speciesCode);
 
-  useEffect(() => {
-    axios.get('https://api.ebird.org/v2/ref/region/list/subnational2/US-NV', {
-      headers: { 'X-eBirdApiToken': MY_TOKEN },
-    })
-      .then(response => setData(response.data))
-      .catch(error => console.log(error));
-  }, []);
 
-  return <View><Text>{JSON.stringify(data)}</Text></View>;
+  const handleAdd = () => {
+    addBird({
+      id: obs.speciesCode,
+      name: obs.comName,
+      description: obs.sciName,
+    });
+  };
+
+
+  return (
+    <View
+      style={{ padding: 16}}
+    >
+      <View style={{ flex: 1 }}>
+        <Text>{obs.sciName}</Text>
+        <Text>{obs.locName}</Text>
+        <Text>{obs.obsDate}</Text>
+
+      </View>
+      <TouchableOpacity
+        onPress={handleAdd}
+        disabled={already}
+        style={{
+          backgroundColor: "blue",
+          padding: 16,
+        }}
+      >
+        <Text>
+          {already ? "Ajouté" : "Ajouter"}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+function BirdListContent() {
+  const { observations, loading, error, refresh } = useApi();
+
+  if (error) {
+    return (
+      <View style={{ flex: 1}}>
+        <Text>{error}</Text>
+        <TouchableOpacity onPress={refresh}>
+          <Text >Réessayer</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  return (
+    <FlatList
+      data={observations}
+      keyExtractor={(item) => item.speciesCode}
+      renderItem={({ item }) => <ObservationCard obs={item} />}
+    />
+  );
+}
+
+export default function Birds() {
+  return (
+    //trouver le code idf ?
+    <ApiProvider regionCode="FR"> 
+      <SafeAreaView style={{ flex: 1 }}>
+        <BirdListContent />
+      </SafeAreaView>
+    </ApiProvider>
+  );
 }
