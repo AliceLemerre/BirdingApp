@@ -1,19 +1,15 @@
-import { Text, View } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context'
-
+import React from "react";
+import { View, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   return (
-    <SafeAreaView>
-      <View
-        style={{
-          flex: 1,
-          
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text>A</Text>
+    <SafeAreaView style={{ flex: 1 }} >
+      <View>
+        <Text >birding</Text>
+        <Text>
+          Enregistrez tous vos oiseaux observés ! Cherchez les espèces dans l'onglet Tous les oiseaux et ajoutez-les à votre profil.
+        </Text>
       </View>
     </SafeAreaView>
   );
