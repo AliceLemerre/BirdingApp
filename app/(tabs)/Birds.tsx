@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ApiProvider, useApi, TObservation } from "../providers/apiProvider";
+import { ApiProvider, useApi, TObservation } from "../../providers/apiProvider";
 import { useBirdsContext } from "@/providers/BirdProvider";
-
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, FadeIn, FadeInDown} from 'react-native-reanimated';
+import { Pressable } from 'react-native';
 
 function ObservationCard({ obs }: { obs: TObservation }) {
   const { addBird, hasBird } = useBirdsContext();
@@ -18,7 +19,11 @@ function ObservationCard({ obs }: { obs: TObservation }) {
     });
   };
 
+  const scale = useSharedValue(1);
+   const animStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
+
+  //désolée c'est moins bien mais il n'y pas de bonne api pour oiseaux avec des photos
   return (
     <View
       style={styles.container}
@@ -29,20 +34,25 @@ function ObservationCard({ obs }: { obs: TObservation }) {
         <Text style={ styles.secondaryText }>{obs.obsDate}</Text>
 
       </View>
-      <TouchableOpacity
-        onPress={handleAdd}
+      <Pressable
         disabled={already}
         style={{
-          backgroundColor: already ? "#ccc" : "#2e7d32",
+           backgroundColor: already ? "#ccc" : "#2e7d32",
           paddingHorizontal: 14,
           paddingVertical: 8,
           borderRadius: 8,
         }}
+         onPressIn={() => { scale.value = withSpring(0.9); }}
+        onPressOut={() => { scale.value = withSpring(0.9); }}
+         onPress={handleAdd}
       >
+
+      <Animated.View style={animStyle}>
         <Text style={styles.deleteText}>
           {already ? "Ajouté" : "Ajouter"}
         </Text>
-      </TouchableOpacity>
+      </Animated.View>
+      </Pressable>
     </View>
   );
 }
@@ -65,7 +75,10 @@ function BirdListContent() {
     <FlatList
       data={observations}
       keyExtractor={(item) => item.speciesCode}
-      renderItem={({ item }) => <ObservationCard obs={item} />}
+      renderItem={({ item }) => 
+      <Animated.View entering={FadeInDown.delay(60).duration(300)}>
+        <ObservationCard obs={item} />
+        </Animated.View>}
     />
   );
 }
