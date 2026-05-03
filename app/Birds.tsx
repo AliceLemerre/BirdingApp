@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ApiProvider, useApi, TObservation } from "../providers/apiProvider";
 import { useBirdsContext } from "@/providers/BirdProvider";
@@ -21,23 +21,25 @@ function ObservationCard({ obs }: { obs: TObservation }) {
 
   return (
     <View
-      style={{ padding: 16}}
+      style={styles.container}
     >
-      <View style={{ flex: 1 }}>
-        <Text>{obs.sciName}</Text>
-        <Text>{obs.locName}</Text>
-        <Text>{obs.obsDate}</Text>
+      <View style={styles.flex}>
+        <Text style={ styles.text }>{obs.sciName}</Text>
+        <Text style={ styles.secondaryText }>{obs.locName}</Text>
+        <Text style={ styles.secondaryText }>{obs.obsDate}</Text>
 
       </View>
       <TouchableOpacity
         onPress={handleAdd}
         disabled={already}
         style={{
-          backgroundColor: "blue",
-          padding: 16,
+          backgroundColor: already ? "#ccc" : "#2e7d32",
+          paddingHorizontal: 14,
+          paddingVertical: 8,
+          borderRadius: 8,
         }}
       >
-        <Text>
+        <Text style={styles.deleteText}>
           {already ? "Ajouté" : "Ajouter"}
         </Text>
       </TouchableOpacity>
@@ -50,9 +52,9 @@ function BirdListContent() {
 
   if (error) {
     return (
-      <View style={{ flex: 1}}>
-        <Text>{error}</Text>
-        <TouchableOpacity onPress={refresh}>
+      <View style={styles.container}>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity onPress={refresh} style={styles.validateText}>
           <Text >Réessayer</Text>
         </TouchableOpacity>
       </View>
@@ -72,9 +74,51 @@ export default function Birds() {
   return (
     //trouver le code idf ?
     <ApiProvider regionCode="FR"> 
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.container}>
         <BirdListContent />
       </SafeAreaView>
     </ApiProvider>
   );
 }
+
+
+ const styles = StyleSheet.create({
+     container: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: 12,
+        marginVertical: 4,
+        marginHorizontal: 12,
+        backgroundColor: "#f0f0f0",
+        borderRadius: 10,
+     },
+      text: {
+         fontWeight: "bold", 
+         fontSize: 15
+     },
+     secondaryText: {
+         color: "grey", 
+         marginTop: 12, 
+     },
+     dangerText: {
+          backgroundColor: "#c62828",
+          paddingHorizontal: 14,
+          paddingVertical: 8,
+          borderRadius: 8,
+      },
+      deleteText: {
+          color: "white", 
+          fontWeight: "bold"
+      },
+      validateText: 
+      { color: "blue", 
+        marginTop: 8 
+      },
+      errorText: {
+        color: "red"
+      },
+      flex: {
+        flex: 1,
+      }
+ })
