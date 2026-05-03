@@ -40,7 +40,7 @@ export default function UserBirds() {
   }
 
   return (
-    <SafeAreaView style={ styles.container }>
+    <SafeAreaView style={ styles.flex }>
       <FlatList
         data={birdList}
         keyExtractor={(item) => item.id}
@@ -71,7 +71,7 @@ export default function UserBirds() {
          marginTop: 12, 
      },
      dangerText: {
-          backgroundColor: "#c62828",
+          backgroundColor: "darkred",
           paddingHorizontal: 14,
           paddingVertical: 8,
           borderRadius: 8,
