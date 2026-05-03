@@ -2,12 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
-import { useBirdsContext } from "@/providers/BirdProvider";
+import { useBirdsContext, TBird } from "@/providers/BirdProvider";
 
-export default function Bird() {
+export default function Bird({ bird }: { bird: TBird }) {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { birdList } = useBirdsContext();
-  const bird = birdList.find((b) => b.id === id);
 
   if (!bird) {
     return (
@@ -21,6 +20,7 @@ export default function Bird() {
     <SafeAreaView style={ styles.birdContainer } >
       <Text style={ styles.text } >{bird.name}</Text>
       <Text style={ styles.secondaryText } >{bird.description}</Text>
+
     </SafeAreaView>
   );
 }
@@ -30,8 +30,7 @@ export default function Bird() {
  const styles = StyleSheet.create({
      container: {
          flex: 1, 
-         alignItems: "center",
-         justifyContent: "center",
+         padding: 16
      },
      birdContainer: {
          flex: 1, 
