@@ -8,7 +8,7 @@ export default function Index() {
       <View>
         <Text style={styles.title}>birding</Text>
         <Text style={styles.text}>
-          Enregistrez tous vos oiseaux observés ! Cherchez les espèces dans l'onglet Tous les oiseaux et ajoutez-les à votre profil.
+          Enregistrez tous vos oiseaux observés cette année ! Cherchez les espèces dans l'onglet <strong>Tous les oiseaux</strong> et ajoutez-les à votre profil.
         </Text>
       </View>
     </SafeAreaView>

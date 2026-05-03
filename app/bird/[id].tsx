@@ -12,7 +12,7 @@ export default function Bird() {
   if (!bird) {
     return (
       <SafeAreaView style={ styles.container } >
-        <Text style={ styles.secondaryText } >Oiseau introuvable.</Text>
+        <Text style={ styles.secondaryText } >Oiseau introuvable</Text>
       </SafeAreaView>
     );
   }

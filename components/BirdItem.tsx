@@ -6,7 +6,7 @@ import { TBird } from "@/providers/BirdProvider";
 const BirdItem = ({ bird }: { bird: TBird }) => {
   return (
     <TouchableOpacity
-      onPress={() => router.navigate(`/bird/bird/${bird.id}`)}
+      onPress={() => router.navigate('./bird/${id}')}
       style={ styles.container } 
     >
       <Text style={ styles.text }>{bird.name}</Text>

@@ -1,14 +1,15 @@
-import { Tabs } from "expo-router";
-import { BirdProvider } from "@/providers/BirdProvider";
 
-export default function _layout() {
+import { BirdProvider } from "@/providers/BirdProvider";
+import { Stack } from "expo-router";
+
+
+export default function RootLayout() {
   return (
     <BirdProvider>
-      <Tabs>
-        <Tabs.Screen name="index" options={{ title: "Accueil" }} />
-        <Tabs.Screen name="Birds" options={{ title: "Tous les oiseaux" }} />
-        <Tabs.Screen name="userBirds" options={{ title: "Mes oiseaux" }} />
-      </Tabs>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="bird/[id]" options={{ title: "Détail" }} />
+      </Stack>
     </BirdProvider>
   );
 }
