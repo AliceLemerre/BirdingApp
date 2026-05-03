@@ -1,16 +1,36 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+    <SafeAreaView style={styles.container} >
       <View>
-        <Text >birding</Text>
-        <Text>
+        <Text style={styles.title}>birding</Text>
+        <Text style={styles.text}>
           Enregistrez tous vos oiseaux observés ! Cherchez les espèces dans l'onglet Tous les oiseaux et ajoutez-les à votre profil.
         </Text>
       </View>
     </SafeAreaView>
   );
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        padding: 16,
+        alignItems: "center"
+    },
+    title: {
+        fontSize: 24, 
+        fontWeight: "bold",
+        textAlign: "center"
+
+    },
+    text: {
+        color: "grey", 
+        marginTop: 8, 
+        textAlign: "center"
+    }
+})
