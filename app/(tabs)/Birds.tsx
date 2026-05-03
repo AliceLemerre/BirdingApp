@@ -7,6 +7,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withSpring, FadeIn, FadeInD
 import { Pressable } from 'react-native';
 import { useState, useMemo } from "react";
 
+
 function ObservationCard({ obs }: { obs: TObservation }) {
   const { addBird, hasBird } = useBirdsContext();
   const already = hasBird(obs.speciesCode);

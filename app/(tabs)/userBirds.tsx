@@ -11,7 +11,7 @@ function BirdRow({ bird }: { bird: TBird }) {
     <View style={ styles.container } >
       <TouchableOpacity
         style={ styles.flex } 
-        onPress={() => router.navigate(`./bird/${bird.id}`)}
+        onPress={() => router.navigate(`/bird/${bird.id}`)}
       >
         <Text style={ styles.text } >{bird.name}</Text>
         <Text style={ styles.secondaryText } >{bird.description}</Text>
